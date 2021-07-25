@@ -1,0 +1,77 @@
+<div class="row" style="padding: 50px">
+  <div class="col-md-4">
+    <mat-form-field appearance="fill">
+      <mat-label>Select Coin</mat-label>
+      <mat-select [(value)]="selectedCoin">
+        <mat-option *ngFor="let coin of coins" [value]="coin.value">
+          {{ coin.displayText }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-4">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="InsertCoin()"
+      [disabled]="selectedCoin === null"
+    >
+      Insert Coin
+    </button>
+  </div>
+  <div class="col-md-4">
+    <div *ngIf="insertedCoin > 0">
+      <mat-label>Inserted Coins: {{ insertedCoin }} Euro</mat-label>
+    </div>
+  </div>
+</div>
+<div class="row" style="padding: 50px">
+  <div class="col-md-4">
+    <mat-form-field appearance="fill">
+      <mat-label>Select Item</mat-label>
+      <mat-select [(value)]="selectedItem">
+        <mat-option *ngFor="let item of vendingItems" [value]="item.id">
+          {{ item.name }} - {{ item.price }} euro -
+          {{ item.quantity }} portion(s) left
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-4" *ngIf="selectedItem">
+    <button mat-raised-button color="primary" (click)="buyItem()">
+      Buy Item
+    </button>
+  </div>
+  <div class="col-md-4" *ngIf="selectedItem">
+    <button mat-raised-button color="secondary" (click)="cancelOrder()">
+      Cancel
+    </button>
+  </div>
+</div>
+<div
+  class="row"
+  style="padding: 50px"
+  *ngIf="returnedCoins.length > 0 || returnedMessage"
+>
+  <div class="col-md-4" *ngIf="returnedMessage">
+    {{ returnedMessage }}
+  </div>
+  <div class="col-md-8" *ngIf="returnedCoins.length > 0">
+    <mat-label>Returned Coins:</mat-label>
+    <ul>
+      <li *ngFor="let coin of returnedCoins">
+        {{ coin.display }}: {{ coin.value }}
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="row" style="padding: 50px" *ngIf="vendingMachineCoins.length > 0">
+  <div class="col-md-4">Current coins in vending machine:</div>
+  <div class="col-md-8" *ngIf="vendingMachineCoins.length > 0">
+    <ul>
+      <li *ngFor="let coin of vendingMachineCoins">
+        {{ coin.type }}: {{ coin.quantity }}
+      </li>
+    </ul>
+  </div>
+</div>
